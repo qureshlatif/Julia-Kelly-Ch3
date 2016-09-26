@@ -283,3 +283,11 @@ GOFp <- sum(mod$BUGSoutput$sims.list$test)/mod$BUGSoutput$n.sims
 rm(psi,cols,mod,rows,B,X,X.data,X.mult,i,Z)
 
 save.image("Plotting_Pers_LogInfSnagQMD.RData")
+
+##______ Tabulate number of plot X year detections by species________##
+
+detections <- apply(Y,2,function(x) sum(x>0))
+out <- data.frame(cbind(spp,detections),stringsAsFactors=F)
+out$detections <- as.numeric(out$detections)
+
+write.csv(out,"Spp_detections.csv",row.names=F)
