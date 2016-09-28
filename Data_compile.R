@@ -59,6 +59,9 @@ sort(unique(Detection.data$year))
   # Check visit numbers
 sort(unique(Detection.data$survey_round))
 
+  # Truncate by distance (100m cutoff)
+Detection.data <- Detection.data[-which(Detection.data$distance>100),]
+
 ## Compile detection data array ##
 plot <- sort(unique(Detection.data$plot))
 spp <- sort(unique(Detection.data$species))
