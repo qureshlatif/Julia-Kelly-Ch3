@@ -82,7 +82,9 @@ apply(Y.arry,2,function(x) sum(x>0)) #Total number of point X year occasions eac
 ## Compile covariate matrix ##
 Plot.data <- read.csv("PlotLevel_Data.csv",header=T,stringsAsFactors=F)
 Plot.data <- Plot.data[-which(substr(Plot.data$plot,1,2)=="1a"|substr(Plot.data$plot,1,2)=="2a"),]
+sum(!is.element(Plot.data$plot,plot)) # Should be 0.
 sort(unique(Plot.data$plot),na.last=T)
+Plot.data <- Plot.data[order(Plot.data$plot),] #sort plot IDs to match order in detection data.
 
 Plot.data$treat_cont[which(Plot.data$treat_cont=="t ")] <- "t"
 unique(Plot.data$treat_cont)
