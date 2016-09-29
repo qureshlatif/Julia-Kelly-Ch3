@@ -19,28 +19,28 @@ pLog <- ggplot(data = dat,aes(x=x,y=beta.Logging)) +
   geom_point(size=2.5) + 
   geom_hline(yintercept=0) +
   coord_flip() +
-  scale_x_continuous(breaks=seq(1,44),labels=dat$Spp,expand=c(0,1)) +
+  scale_x_continuous(breaks=seq(1,43),labels=dat$Spp,expand=c(0,1)) +
   scale_y_continuous(lim=c(-2.15,2.16)) +
   ylab(expression(hat(beta)["Logging"])) + xlab("Species") +
   theme(axis.title.y=element_text(size=30)) +
   theme(axis.title.x=element_text(size=30)) +
   theme(axis.text.x=element_text(size=15)) +
   theme(axis.text.y=element_text(size=15)) +
-  geom_text(aes(x=47,y=-2.1),label="A",size=8)
+  geom_text(aes(x=44,y=-2.1),label="A",size=8)
 
 pInf <- ggplot(data = dat,aes(x=x,y=beta.Infest)) +
   geom_errorbar(aes(ymin=beta.Infest.lo,ymax=beta.Infest.hi),size=1,width=0) +
   geom_point(size=2.5) + 
   geom_hline(yintercept=0) +
   coord_flip() +
-  scale_x_continuous(breaks=seq(1,44),labels=dat$Spp,expand=c(0,1)) +
+  scale_x_continuous(breaks=seq(1,43),labels=dat$Spp,expand=c(0,1)) +
   scale_y_continuous(lim=c(-2.15,2.16)) +
   ylab(expression(hat(beta)["Infestation"])) + xlab(NULL) +
   theme(axis.title.y=element_text(size=30)) +
   theme(axis.title.x=element_text(size=30)) +
   theme(axis.text.x=element_text(size=15)) +
   theme(axis.text.y=element_text(size=15)) +
-  geom_text(aes(x=47,y=-2.1),label="B",size=8)
+  geom_text(aes(x=44,y=-2.1),label="B",size=8)
 
 p <- ggdraw() +  
   draw_plot(pLog, x = 0, y = 0, width = .52, height = 1) + 
@@ -283,8 +283,8 @@ pCLNU <- ggplot(data = dat.prd,aes(x=X,y=psi)) +
   guides(shape=FALSE,linetype=FALSE) +
   geom_text(aes(x=3,y=1.05),label = "CLNU",size=8)
 
-# HAWO #
-dat.est <- psi.Inf["HAWO",c("psiEst.Inf0.md","psiEst.Inf0.lo","psiEst.Inf0.hi",
+# EVGR #
+dat.est <- psi.Inf["EVGR",c("psiEst.Inf0.md","psiEst.Inf0.lo","psiEst.Inf0.hi",
                             "psiEst.Inflo.md","psiEst.Inflo.lo","psiEst.Inflo.hi",
                             "psiEst.Infhi.md","psiEst.Infhi.lo","psiEst.Infhi.hi")]
 dat.est <- data.frame(rbind(as.numeric(dat.est[1:3]),as.numeric(dat.est[4:6]),as.numeric(dat.est[7:9])))
@@ -293,14 +293,14 @@ dat.est$X <- c(0,4.33,12.7)
 dat.est$bin.lo <- c(0,1,7)
 dat.est$bin.hi <- c(0,5,23)
 
-dat <- as.numeric(psi.Inf["HAWO",prd.cols])
+dat <- as.numeric(psi.Inf["EVGR",prd.cols])
 dat.prd <- dat[1:3]
 for(i in seq(4,length(dat),by=3)) dat.prd <- rbind(dat.prd,dat[i:(i+2)])
 dat.prd <- data.frame(dat.prd,row.names=NULL)
 names(dat.prd) <- c("psi","psi.lo","psi.hi")
 dat.prd$X <- InfX.plot
 
-pHAWO <- ggplot(data = dat.prd,aes(x=X,y=psi)) +
+pEVGR <- ggplot(data = dat.prd,aes(x=X,y=psi)) +
   geom_line(size=1,linetype="solid") +
   geom_line(aes(y=psi.lo),size=1,linetype="dashed") +
   geom_line(aes(y=psi.hi),size=1,linetype="dashed") +
@@ -311,7 +311,7 @@ pHAWO <- ggplot(data = dat.prd,aes(x=X,y=psi)) +
   theme(axis.text.x=element_text(size=20)) +
   theme(axis.text.y=element_text(size=25)) +
   guides(shape=FALSE,linetype=FALSE) +
-  geom_text(aes(x=3,y=1.05),label = "HAWO",size=8)
+  geom_text(aes(x=3,y=1.05),label = "EVGR",size=8)
 
 # HOWR #
 dat.est <- psi.Inf["HOWR",c("psiEst.Inf0.md","psiEst.Inf0.lo","psiEst.Inf0.hi",
@@ -373,8 +373,8 @@ pNOFL <- ggplot(data = dat.prd,aes(x=X,y=psi)) +
   guides(shape=FALSE,linetype=FALSE) +
   geom_text(aes(x=3,y=1.05),label = "NOFL",size=8)
 
-# RBNU #
-dat.est <- psi.Inf["RBNU",c("psiEst.Inf0.md","psiEst.Inf0.lo","psiEst.Inf0.hi",
+# WAVI #
+dat.est <- psi.Inf["WAVI",c("psiEst.Inf0.md","psiEst.Inf0.lo","psiEst.Inf0.hi",
                             "psiEst.Inflo.md","psiEst.Inflo.lo","psiEst.Inflo.hi",
                             "psiEst.Infhi.md","psiEst.Infhi.lo","psiEst.Infhi.hi")]
 dat.est <- data.frame(rbind(as.numeric(dat.est[1:3]),as.numeric(dat.est[4:6]),as.numeric(dat.est[7:9])))
@@ -383,14 +383,14 @@ dat.est$X <- c(0,4.33,12.7)
 dat.est$bin.lo <- c(0,1,7)
 dat.est$bin.hi <- c(0,5,23)
 
-dat <- as.numeric(psi.Inf["RBNU",prd.cols])
+dat <- as.numeric(psi.Inf["WAVI",prd.cols])
 dat.prd <- dat[1:3]
 for(i in seq(4,length(dat),by=3)) dat.prd <- rbind(dat.prd,dat[i:(i+2)])
 dat.prd <- data.frame(dat.prd,row.names=NULL)
 names(dat.prd) <- c("psi","psi.lo","psi.hi")
 dat.prd$X <- InfX.plot
 
-pRBNU <- ggplot(data = dat.prd,aes(x=X,y=psi)) +
+pWAVI <- ggplot(data = dat.prd,aes(x=X,y=psi)) +
   geom_line(size=1,linetype="solid") +
   geom_line(aes(y=psi.lo),size=1,linetype="dashed") +
   geom_line(aes(y=psi.hi),size=1,linetype="dashed") +
@@ -401,7 +401,7 @@ pRBNU <- ggplot(data = dat.prd,aes(x=X,y=psi)) +
   theme(axis.text.x=element_text(size=20)) +
   theme(axis.text.y=element_text(size=25)) +
   guides(shape=FALSE,linetype=FALSE) +
-  geom_text(aes(x=3,y=1.05),label = "RBNU",size=8)
+  geom_text(aes(x=3,y=1.05),label = "WAVI",size=8)
 
 # WETA #
 dat.est <- psi.Inf["WETA",c("psiEst.Inf0.md","psiEst.Inf0.lo","psiEst.Inf0.hi",
@@ -467,9 +467,9 @@ p <- ggdraw() +
   draw_plot(pATTW, x = 0.05, y = 0.684, width = .317, height = .317) + 
   draw_plot(pBTLH, x = 0.367, y = 0.684, width = .317, height = .317) + 
   draw_plot(pCLNU, x = 0.684, y = 0.684, width = .317, height = .317) + 
-  draw_plot(pHAWO, x = 0.05, y = 0.367, width = .317, height = .317) + 
-  draw_plot(pNOFL, x = 0.367, y = 0.367, width = .317, height = .317) + 
-  draw_plot(pRBNU, x = 0.684, y = 0.367, width = .317, height = .317) + 
+  draw_plot(pNOFL, x = 0.05, y = 0.367, width = .317, height = .317) + 
+  draw_plot(pEVGR, x = 0.367, y = 0.367, width = .317, height = .317) + 
+  draw_plot(pWAVI, x = 0.684, y = 0.367, width = .317, height = .317) + 
   draw_plot(pHOWR, x = 0.05, y = 0.05, width = .317, height = .317) + 
   draw_plot(pWETA, x = 0.367, y = 0.05, width = .317, height = .317) + 
   draw_plot(pWEWP, x = 0.684, y = 0.05, width = .317, height = .317) + 
@@ -478,7 +478,7 @@ p <- ggdraw() +
 
 save_plot("SppPlots_Inf.jpeg", p, ncol = 3, nrow = 3, dpi=600) 
 
-## 1 species related with snags, and 4 with QMD
+## 2 species related with snags, and 3 with QMD
 # Compile column indices for predicted occupancy with snags #
 prd.md <- which(substr(dimnames(psi.snag)[[2]],1,7)=="psiPred"&substr(dimnames(psi.snag)[[2]],
                                                                      (nchar(dimnames(psi.snag)[[2]])-1),
@@ -523,6 +523,37 @@ pHOWR <- ggplot(data = dat.prd,aes(x=X,y=psi)) +
   guides(shape=FALSE,linetype=FALSE) +
   geom_text(aes(x=2,y=1.05),label = "HOWR",size=8)
 
+# STJA #
+dat.est <- psi.snag["STJA",c("psiEst.snaglo.md","psiEst.snaglo.lo","psiEst.snaglo.hi",
+                            "psiEst.snagmd.md","psiEst.snagmd.lo","psiEst.snagmd.hi",
+                            "psiEst.snaghi.md","psiEst.snaghi.lo","psiEst.snaghi.hi")]
+dat.est <- data.frame(rbind(as.numeric(dat.est[1:3]),as.numeric(dat.est[4:6]),as.numeric(dat.est[7:9])))
+names(dat.est) <- c("psi","psi.lo","psi.hi")
+dat.est$X <- c(1.36,3.69,7.31)
+dat.est$bin.lo <- c(0,3,7)
+dat.est$bin.hi <- c(2,6,11)
+
+dat <- as.numeric(psi.snag["STJA",prd.cols])
+dat.prd <- dat[1:3]
+for(i in seq(4,length(dat),by=3)) dat.prd <- rbind(dat.prd,dat[i:(i+2)])
+dat.prd <- data.frame(dat.prd,row.names=NULL)
+names(dat.prd) <- c("psi","psi.lo","psi.hi")
+dat.prd$X <- SnagX.plot
+
+pSTJA <- ggplot(data = dat.prd,aes(x=X,y=psi)) +
+  geom_line(size=1,linetype="solid") +
+  geom_line(aes(y=psi.lo),size=1,linetype="dashed") +
+  geom_line(aes(y=psi.hi),size=1,linetype="dashed") +
+  geom_point(data=dat.est,aes(x=X,y=psi),size=5) + 
+  geom_errorbar(data=dat.est,aes(x=X,ymin=psi.lo,ymax=psi.hi),size=1,width=0.5) +
+  ylab(NULL) + xlab("Snags (count)") +
+  scale_y_continuous(lim=c(0,1.05),breaks=c(0,0.25,0.5,0.75,1)) +
+  theme(axis.title.x=element_text(size=30)) +
+  theme(axis.text.x=element_text(size=20)) +
+  theme(axis.text.y=element_text(size=25)) +
+  guides(shape=FALSE,linetype=FALSE) +
+  geom_text(aes(x=2,y=1.05),label = "STJA",size=8)
+
 # Compile column indices for predicted occupancy with snags #
 prd.md <- which(substr(dimnames(psi.QMD)[[2]],1,7)=="psiPred"&substr(dimnames(psi.QMD)[[2]],
                                                                      (nchar(dimnames(psi.QMD)[[2]])-1),
@@ -560,12 +591,12 @@ pAMRO <- ggplot(data = dat.prd,aes(x=X,y=psi)) +
   geom_point(data=dat.est,aes(x=X,y=psi),size=5) + 
   geom_errorbar(data=dat.est,aes(x=X,ymin=psi.lo,ymax=psi.hi),size=1,width=50) +
   labs(y=NULL,x=expression("QMD ("~cm^2~")")) +
-  scale_y_continuous(lim=c(0,1.05),breaks=c(0,0.25,0.5,0.75,1)) +
+  scale_y_continuous(lim=c(0,1.06),breaks=c(0,0.25,0.5,0.75,1)) +
   theme(axis.title.x=element_text(size=30)) +
   theme(axis.text.x=element_text(size=20)) +
   theme(axis.text.y=element_text(size=25)) +
   guides(shape=FALSE,linetype=FALSE) +
-  geom_text(aes(x=500,y=1.05),label = "AMRO",size=8)
+  geom_text(aes(x=600,y=1.06),label = "AMRO",size=8)
 
 # WETA #
 dat.est <- psi.QMD["WETA",c("psiEst.QMDlo.md","psiEst.QMDlo.lo","psiEst.QMDlo.hi",
@@ -596,10 +627,10 @@ pWETA <- ggplot(data = dat.prd,aes(x=X,y=psi)) +
   theme(axis.text.x=element_text(size=20)) +
   theme(axis.text.y=element_text(size=25)) +
   guides(shape=FALSE,linetype=FALSE) +
-  geom_text(aes(x=500,y=1.05),label = "WETA",size=8)
+  geom_text(aes(x=600,y=1.05),label = "WETA",size=8)
 
-# WISA #
-dat.est <- psi.QMD["WISA",c("psiEst.QMDlo.md","psiEst.QMDlo.lo","psiEst.QMDlo.hi",
+# WEWP #
+dat.est <- psi.QMD["WEWP",c("psiEst.QMDlo.md","psiEst.QMDlo.lo","psiEst.QMDlo.hi",
                             "psiEst.QMDmd.md","psiEst.QMDmd.lo","psiEst.QMDmd.hi",
                             "psiEst.QMDhi.md","psiEst.QMDhi.lo","psiEst.QMDhi.hi")]
 dat.est <- data.frame(rbind(as.numeric(dat.est[1:3]),as.numeric(dat.est[4:6]),as.numeric(dat.est[7:9])))
@@ -608,14 +639,14 @@ dat.est$X <- c(514,818,1331)
 dat.est$bin.lo <- c(331,635,960)
 dat.est$bin.hi <- c(630,939,2441)
 
-dat <- as.numeric(psi.QMD["WISA",prd.cols])
+dat <- as.numeric(psi.QMD["WEWP",prd.cols])
 dat.prd <- dat[1:3]
 for(i in seq(4,length(dat),by=3)) dat.prd <- rbind(dat.prd,dat[i:(i+2)])
 dat.prd <- data.frame(dat.prd,row.names=NULL)
 names(dat.prd) <- c("psi","psi.lo","psi.hi")
 dat.prd$X <- QMDX.plot
 
-pWISA <- ggplot(data = dat.prd,aes(x=X,y=psi)) +
+pWEWP <- ggplot(data = dat.prd,aes(x=X,y=psi)) +
   geom_line(size=1,linetype="solid") +
   geom_line(aes(y=psi.lo),size=1,linetype="dashed") +
   geom_line(aes(y=psi.hi),size=1,linetype="dashed") +
@@ -627,13 +658,14 @@ pWISA <- ggplot(data = dat.prd,aes(x=X,y=psi)) +
   theme(axis.text.x=element_text(size=20)) +
   theme(axis.text.y=element_text(size=25)) +
   guides(shape=FALSE,linetype=FALSE) +
-  geom_text(aes(x=500,y=1.05),label = "WISA",size=8)
+  geom_text(aes(x=600,y=1.05),label = "WEWP",size=8)
 
 p <- ggdraw() +  
-  draw_plot(pHOWR, x = 0.05, y = 0.5, width = .475, height = .5) + 
-  draw_plot(pAMRO, x = 0.525, y = 0.5, width = .475, height = .5) + 
-  draw_plot(pWETA, x = 0.05, y = 0, width = .475, height = .5) + 
-  draw_plot(pWISA, x = 0.525, y = 0, width = .475, height = .5) + 
+  draw_plot(pHOWR, x = 0.05, y = 0.66, width = .475, height = .33) + 
+  draw_plot(pSTJA, x = 0.525, y = 0.66, width = .475, height = .33) + 
+  draw_plot(pAMRO, x = 0.05, y = 0.33, width = .475, height = .33) + 
+  draw_plot(pWETA, x = 0.525, y = 0.33, width = .475, height = .33) + 
+  draw_plot(pWEWP, x = 0.05, y = 0, width = .475, height = .33) + 
   draw_plot_label(label="Point occupancy",size=30,x=0,y=0.3,angle=90)
 
-save_plot("SppPlots_SnagQMD.jpeg", p, ncol = 3, nrow = 3, dpi=600) 
+save_plot("SppPlots_SnagQMD.jpeg", p, ncol = 2.5, nrow = 3, dpi=600) 
