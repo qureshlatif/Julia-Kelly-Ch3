@@ -634,3 +634,70 @@ p <- ggdraw() +
   draw_plot_label(label="Point occupancy",size=30,x=0,y=0.3,angle=90)
 
 save_plot("SppPlots_SnagQMDShrub.jpeg", p, ncol = 2.5, nrow = 3, dpi=600) 
+
+  ##_______ Plot comparing beta-logging estimates from model with/without other covariates _________##
+Spp <- spp
+dat <- data.frame(cbind(out.betas[,c("beta.Logging","beta.Logging.lo","beta.Logging.hi")],
+                        out.logonly[,c("beta.Logging","beta.Logging.lo","beta.Logging.hi")]),
+                        stringsAsFactors=F)
+dat$Spp <- Spp
+row.names(dat) <- NULL
+names(dat) <- c("beta.LogCovs","beta.LogCovs.lo","beta.LogCovs.hi",
+                "beta.LogOnly","beta.LogOnly.lo","beta.LogOnly.hi",
+                "Spp")
+dat <- dat[order(dat$beta.LogCovs),]
+dat$x <- seq(1:nrow(dat))
+
+pLogCovs <- ggplot(data = dat,aes(x=x,y=beta.LogCovs)) +
+  geom_errorbar(aes(ymin=beta.LogCovs.lo,ymax=beta.LogCovs.hi),size=1,width=0) +
+  geom_point(size=2.5) + 
+  geom_hline(yintercept=0) +
+  coord_flip() +
+  scale_x_continuous(breaks=seq(1,43),labels=dat$Spp,expand=c(0,1)) +
+  scale_y_continuous(lim=c(-1,1)) +
+  ylab(expression(hat(beta)["Logging"])) + xlab("Species") +
+  theme(axis.title.y=element_text(size=30)) +
+  theme(axis.title.x=element_text(size=30)) +
+  theme(axis.text.x=element_text(size=15)) +
+  theme(axis.text.y=element_text(size=15)) +
+  geom_text(aes(x=44,y=-1),label="A",size=8)
+
+pLogOnly <- ggplot(data = dat,aes(x=x,y=beta.LogOnly)) +
+  geom_errorbar(aes(ymin=beta.LogOnly.lo,ymax=beta.LogOnly.hi),size=1,width=0) +
+  geom_point(size=2.5) + 
+  geom_hline(yintercept=0) +
+  coord_flip() +
+  scale_x_continuous(breaks=seq(1,43),labels=dat$Spp,expand=c(0,1)) +
+  scale_y_continuous(lim=c(-1,1)) +
+  ylab(expression(hat(beta)["Logging"])) + xlab("Species") +
+  theme(axis.title.y=element_text(size=30)) +
+  theme(axis.title.x=element_text(size=30)) +
+  theme(axis.text.x=element_text(size=15)) +
+  theme(axis.text.y=element_text(size=15)) +
+  geom_text(aes(x=44,y=-1),label="B",size=8)
+
+p <- ggdraw() +  
+  draw_plot(pLogCovs, x = 0, y = 0, width = .52, height = 1) + 
+  draw_plot(pLogOnly, x = 0.52, y = 0, width = .48, height = 1)
+#p
+
+save_plot("Betas_LogCovs_Vs_LogOnly.jpeg", p, ncol = 3, nrow = 3, dpi=600) 
+
+##_______ Plot detection probabilities by species (realized later not needed, but left it in anyways) ______##
+
+library(ggplot2)
+library(cowplot)
+
+out.sort <- data.frame(out.betas[,c(1:3)])
+out.sort <- out.sort[order(out.sort$p),]
+out.sort$Spp <- row.names(out.sort)
+out.sort$index <- seq(1,nrow(out.sort))
+
+p <- ggplot(data = out.sort,aes(x=p,y=index)) +
+  geom_point() + 
+  geom_errorbarh(aes(xmin=p.lo,xmax=p.hi)) +
+  scale_y_continuous(breaks=seq(1,43),labels=out.sort$Spp) +
+  labs(x=expression(paste("Detection probability (",hat(p),")",sep="")),y="Species") + xlim(0,1) +
+  theme(axis.title.x=element_text(size=30)) +
+  theme(axis.title.y=element_text(size=30)) +
+  theme(axis.text.x=element_text(size=20))
