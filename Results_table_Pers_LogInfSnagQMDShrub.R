@@ -362,8 +362,37 @@ for(i in 1:length(vars)) {
 
 write.csv(out,"Cov_summary.csv",row.names=T)
 
+##_______ Tabulate betas from logging-only model _______##
+
+# Get estimates from logging-only model #
+library(R.utils)
+mod <- loadObject("Mod_Pers_Log")
+
+rows<-spp
+cols<-c("p","p.lo","p.hi","beta0","beta0.lo","beta0.hi","beta1","beta1.lo",
+        "beta1.hi","beta.Logging","beta.Logging.lo","beta.Logging.hi")
+out<-matrix(NA,nrow=length(rows),ncol=length(cols))
+dimnames(out)<-list(rows,cols)
+
+out[,"beta0"] <- apply(mod$BUGSoutput$sims.list$beta0,2,median)  
+out[,"beta0.lo"] <- apply(mod$BUGSoutput$sims.list$beta0,2,function(x) quantile(x,prob=0.05,type=8))  
+out[,"beta0.hi"] <- apply(mod$BUGSoutput$sims.list$beta0,2,function(x) quantile(x,prob=0.95,type=8))  
+
+out[,"beta1"] <- apply(mod$BUGSoutput$sims.list$beta1,2,median)  
+out[,"beta1.lo"] <- apply(mod$BUGSoutput$sims.list$beta1,2,function(x) quantile(x,prob=0.05,type=8))  
+out[,"beta1.hi"] <- apply(mod$BUGSoutput$sims.list$beta1,2,function(x) quantile(x,prob=0.95,type=8))  
+
+out[,"p"] <- apply(mod$BUGSoutput$sims.list$pspp,2,median)  
+out[,"p.lo"] <- apply(mod$BUGSoutput$sims.list$pspp,2,function(x) quantile(x,prob=0.05,type=8))  
+out[,"p.hi"] <- apply(mod$BUGSoutput$sims.list$pspp,2,function(x) quantile(x,prob=0.95,type=8))  
+
+out[,"beta.Logging"] <- apply(mod$BUGSoutput$sims.list$beta.Logging,2,median)  
+out[,"beta.Logging.lo"] <- apply(mod$BUGSoutput$sims.list$beta.Logging,2,function(x) quantile(x,prob=0.05,type=8))  
+out[,"beta.Logging.hi"] <- apply(mod$BUGSoutput$sims.list$beta.Logging,2,function(x) quantile(x,prob=0.95,type=8))  
+
+out.logonly <- out
+
 ## Cleanup ##
 rm(psi,cols,mod,rows,B,X,X.data,X.mult,i,Z,out,vars)
 
 save.image("Plotting_Pers_LogInfSnagQMDShrub.RData")
-
