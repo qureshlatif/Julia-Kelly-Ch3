@@ -635,7 +635,7 @@ p <- ggdraw() +
 
 save_plot("SppPlots_SnagQMDShrub.jpeg", p, ncol = 2.5, nrow = 3, dpi=600) 
 
-  ##_______ Plot comparing beta-logging estimates from model with/without other covariates _________##
+##_______ Plot comparing beta-logging estimates from model with/without other covariates _________##
 Spp <- spp
 dat <- data.frame(cbind(out.betas[,c("beta.Logging","beta.Logging.lo","beta.Logging.hi")],
                         out.logonly[,c("beta.Logging","beta.Logging.lo","beta.Logging.hi")]),

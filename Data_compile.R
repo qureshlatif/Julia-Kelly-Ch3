@@ -1,5 +1,5 @@
 #setwd("C:/Users/qlatif/Desktop/LoggingData_Julia") # Change to environment
-setwd("F:/research stuff/FS_PostDoc/outside_consult/LoggingData_Julia") # Change to environment
+setwd("F:/research stuff/FS_PostDoc/consult_&_collaborate/JuliaH_dissert/Chap3") # Change to environment
 
 ## Load and clean data ##
 Detection.data <- read.csv("BirdsLog.csv",header=T,stringsAsFactors=F)
