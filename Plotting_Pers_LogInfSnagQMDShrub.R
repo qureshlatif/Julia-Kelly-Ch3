@@ -2,7 +2,7 @@ require(R2jags)
 require(ggplot2)
 require(cowplot)
 require(grid)
-setwd ("F:/research stuff/FS_PostDoc/outside_consult/LoggingData_Julia") #If running on desktop.
+setwd ("F:/research stuff/FS_PostDoc/consult_&_collaborate/JuliaH_dissert/Chap3") #If running on desktop.
 load("Plotting_Pers_LogInfSnagQMDShrub.RData")
 
 ##_____________ Logging & Infection parameter estimates for all species ________________________
